@@ -1,6 +1,3 @@
-import java.util.Scanner;
-import IFAL.Carta;
-
 class Jogador{
     private String nome;
     private int pontuacao;
@@ -33,28 +30,30 @@ public class Main{
 
         jogadores.close();
 
-        if (nJogadores == 1){
-            System.out.println("O número de jogadores mínimo é 2!");
-        }
-
         if (nJogadores == 2){
             System.out.println("Insira o nome do primeiro jogador: ");
             Scanner jogadorNome;
             jogadorNome = new Scanner(System.in);
             Jogador jogador1;
             jogador1 = new Jogador();
-            jogador1.setNome(jogadorNome.nextLine());
-
+            if (jogadorNome.hasNextLine()){
+                jogador1.setNome(jogadorNome.nextLine());
+            }
             todosJogadores[0] = jogador1.getNome();
+            
+            jogadorNome.close();
 
             System.out.println("Insira o nome do segundo jogador: ");
+            Scanner jogador2Nome;
+            jogador2Nome = new Scanner(System.in);
             Jogador jogador2;
             jogador2 = new Jogador();
-            jogador2.setNome(jogadorNome.nextLine());
-
+            if (jogador2Nome.hasNextLine()){
+               jogador2.setNome(jogador2Nome.nextLine());
+            }
             todosJogadores[1] = jogador2.getNome();
 
-            jogadorNome.close();
+            jogador2Nome.close();
         }
 
         if (nJogadores == 3){
@@ -120,9 +119,11 @@ public class Main{
         System.out.println("---- QUAL O TIPO DE CARTA SERÁ USADO NO JOGO?\nTRADICIONAL - INSIRA 1;\nNAIPE+ - INSIRA 2;\nVALOR+ - INSIRA 3");
         Scanner carta;
         carta = new Scanner(System.in);
-        int tipoCarta = carta.nextInt();
-        int[] pontosJogadores = new int[5];
+        if (carta.hasNextLine()){
+            int tipoCarta = carta.nextInt();
+            int[] pontosJogadores = new int[5];
 
+            carta.close();
         for (int rodadas = 0; rodadas >= 0;){
             System.out.println("--- BEM-VINDO À RODADA "+rodadas);
             if (nJogadores == 2){
@@ -136,8 +137,16 @@ public class Main{
                 carta2 = new Carta();
                 carta2.printaCarta();
                 pontosJogadores[0] = carta2.getPontos();
+                if (tipoCarta == 1){
+                    int maiorValor = pontosJogadores[0];
+                    for (int n : pontosJogadores){
+                        if (n > maiorValor){
+                            maiorValor = n;
+                        }
+                    }  
+                }
 
-
+            }
         }
         }
     }
